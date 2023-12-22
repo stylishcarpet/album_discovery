@@ -1,0 +1,239 @@
+<!-- playback.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stylishcarpet Weekly Spotify Playlist</title>
+  <!-- Include the Spotify Web API library from the CDN -->
+  <script src="spotify-web-api.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+<body>
+  <h1>Stylishcarpet Weekly Spotify Playlist (2023-12-15)</h1>
+  Start Spotify on the player you want to hear the playlist from. I.E. open the app and play something
+  on your phone and then click the play button.
+  <br>
+  <button id="play">Play</button>
+  <button id="pause">Pause</button>
+  <button id="next">Next</button>
+  <button id="fastForward40">Fast Forward 40%</botton>
+  <button id="fastForward70">Fast Forward 70%</botton>
+  <button id="prev">Previous</button>
+  <label>
+    <input type="checkbox" id="likeButton" name="likeStatus">
+    Like
+  </label>
+
+  <script>
+    const accessToken = '<%= accessToken %>'; // Access the access token passed from the server
+
+    // Create a new instance of the Spotify Web API using the access token
+    const spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(accessToken);
+
+    // Add event listeners to control playback
+    document.getElementById('play').addEventListener('click', async () => {
+      // Below would be if you wanted to play a bunch of songs together context_uri is for playlist
+      //uris: ['spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=0c6a5ae6e7fc4123'],
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:6xttXlbK1ZRWeVLa1w8e6W?si=3ac6fa6f1ae54408'
+      });
+      // Below was trying to fix no active device found, fix means nothing is playing spotify now
+      // spotifyApi.getMyDevices( function ( err, data ) {
+      //   if (err) {
+      //     console.error("ERROR: ", err)
+      //   } else {
+      //     //spotify.play({device_id: data.devices[0].id, uris: [tracks[0].uri]}, function ( err, data ) {
+      //     spotifyApi.play({
+      //       context_uri: 'spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=0c6a5ae6e7fc4123'
+      //     });
+      //     if (err) {
+      //       console.error(err)
+      //     } else {
+      //       console.log(tracks[0].uri)
+      //     }
+      //   }
+      // })
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+
+    document.getElementById('pause').addEventListener('click', () => {
+      spotifyApi.pause();
+    });
+
+    document.getElementById('next').addEventListener('click', async () => {
+      spotifyApi.skipToNext();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+
+    document.getElementById('prev').addEventListener('click', async () => {
+      spotifyApi.skipToPrevious();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+
+    document.getElementById('fastForward40').addEventListener('click', async () => {
+      try {
+        // Get the current track information
+        const response = await axios.get('/current-track');
+        const currentTrack = response.data;
+
+        if (!currentTrack) {
+          console.log('No track is currently playing.');
+          return;
+        }
+
+        // Calculate the fast forward position (40% of duration)
+        const durationMs = currentTrack.durationMs;
+        const fastForwardMs = Math.round(0.4 * durationMs);
+
+        // Seek to the fast forward position
+        await spotifyApi.seek(fastForwardMs);
+        displayCurrentTrackInfo(); // Update the displayed track information
+      } catch (error) {
+        console.error('Error fast forwarding:', error);
+      }
+    });
+    document.getElementById('fastForward70').addEventListener('click', async () => {
+      try {
+        // Get the current track information
+        const response = await axios.get('/current-track');
+        const currentTrack = response.data;
+
+        if (!currentTrack) {
+          console.log('No track is currently playing.');
+          return;
+        }
+
+        // Calculate the fast forward position (70% of duration)
+        const durationMs = currentTrack.durationMs;
+        const fastForwardMs = Math.round(0.7 * durationMs);
+
+        // Seek to the fast forward position
+        await spotifyApi.seek(fastForwardMs);
+        displayCurrentTrackInfo(); // Update the displayed track information
+      } catch (error) {
+        console.error('Error fast forwarding:', error);
+      }
+    });
+  </script>
+
+  <!-- Now Playing -->
+  <h2>Currently Playing:</h2>
+  <img id="albumCover" src="" alt="Album Cover" style="max-width: 300px; max-height: 300px;">
+  <p>Title: <span id="trackTitle"></span></p>
+  <p>Artist(s): <span id="trackArtist"></span></p>
+  <p>Album: <span id="trackAlbum"></span></p>
+
+  <!-- Previous Playlists -->
+  <h2>Previous Playlists</h2>
+  <button id="play20231208">Play-2023-12-08</button>
+  <script>
+    document.getElementById('play20231208').addEventListener('click', async () => {
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:41oXlEAb2fbq741fkakfa7?si=1e610bdc4b1e46e0'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+  <button id="play20231201">Play-2023-12-01</button>
+  <script>
+    document.getElementById('play20231201').addEventListener('click', async () => {
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:4km4erf2c6ILKqdUq8OnyW?si=c937f3a8042d4e8c'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+  <button id="play20231004">Play-2023-10-04</button>
+  <script>
+    document.getElementById('play20231004').addEventListener('click', async () => {
+      spotifyApi.play({
+        context_uri: 'spotify:playlist:32pcmrCVn0QFriHzjjH81A?si=06050747ecc342fb'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+  <button id="play20230908">Play-2023-09-08</button>
+  <script>
+    document.getElementById('play20230908').addEventListener('click', async () => {
+      spotifyApi.play({
+        context_uri: 'spotify:playlist:3hb8pVqVGPcdON7R07pONV?si=e79b3477c7d14c6c'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+  <button id="play20230714">Play-2023-07-14</button>
+  <script>
+    document.getElementById('play20230714').addEventListener('click', async () => {
+      spotifyApi.play({
+        context_uri: 'spotify:playlist:054M7vFeBmWCabQMkpi8HY?si=01cf3c3be9e7416c'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+
+
+  <script>
+    document.getElementById('likeButton').addEventListener('change', async () => {
+      try {
+        // Get the current track information
+        const response = await axios.get('/current-track');
+        const currentTrack = response.data;
+
+        if (!currentTrack) {
+          console.log('No track is currently playing.');
+          return;
+        }
+
+        const liked = currentTrack.liked
+        //console.log('liked='+liked)
+        //if (this.checked) {
+        if (liked) {
+          console.log('Remove from saved tracks id='+currentTrack.id)
+          await spotifyApi.removeFromMySavedTracks([currentTrack.id]);
+        } else {
+          console.log('Add to saved tracks id='+currentTrack.id)
+          await spotifyApi.addToMySavedTracks([currentTrack.id])
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        displayCurrentTrackInfo()
+      } catch (error) {
+        console.error('Error liking the track:', error);
+      }
+    });
+    // Function to fetch and display the current track information
+    async function displayCurrentTrackInfo() {
+      try {
+        const response = await axios.get('/current-track');
+        const trackInfo = response.data;
+        console.log('trackInfo='+JSON.stringify(trackInfo))
+
+        if (trackInfo) {
+          document.getElementById('trackTitle').textContent = trackInfo.title;
+          document.getElementById('trackArtist').textContent = trackInfo.artist;
+          document.getElementById('trackAlbum').textContent = trackInfo.album;
+          document.getElementById('albumCover').src = trackInfo.albumCoverUrl;
+          document.getElementById('likeButton').checked = trackInfo.liked;
+        } else {
+          console.log('No track is currently playing.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    // Call the function to display current track information
+    displayCurrentTrackInfo();
+  </script>
+</body>
+</html>
+
+
