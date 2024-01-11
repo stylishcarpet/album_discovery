@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 </head>
 <body>
-  <h1>Stylishcarpet Weekly Spotify Playlist (2023-12-15)</h1>
+  <h1>Stylishcarpet Weekly Spotify Playlist (2024-01-05)</h1>
   Start Spotify on the player you want to hear the playlist from. I.E. open the app and play something
   on your phone and then click the play button.
   <br>
@@ -35,7 +35,7 @@
       // Below would be if you wanted to play a bunch of songs together context_uri is for playlist
       //uris: ['spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=0c6a5ae6e7fc4123'],
       spotifyApi.play({
-	context_uri: 'spotify:playlist:6xttXlbK1ZRWeVLa1w8e6W?si=3ac6fa6f1ae54408'
+	context_uri: 'spotify:playlist:3vGQVIMwRE4J9AZWoivlgo?si=4fa00b6f911442ce'
       });
       // Below was trying to fix no active device found, fix means nothing is playing spotify now
       // spotifyApi.getMyDevices( function ( err, data ) {
@@ -128,6 +128,16 @@
 
   <!-- Previous Playlists -->
   <h2>Previous Playlists</h2>
+  <button id="play20231215">Play-2023-12-15</button>
+  <script>
+    document.getElementById('play20231215').addEventListener('click', async () => {
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:6xttXlbK1ZRWeVLa1w8e6W?si=3ac6fa6f1ae54408'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
   <button id="play20231208">Play-2023-12-08</button>
   <script>
     document.getElementById('play20231208').addEventListener('click', async () => {
