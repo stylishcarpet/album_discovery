@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 </head>
 <body>
-  <h1>Stylishcarpet Weekly Spotify Playlist (2024-01-19)</h1>
+  <h1>Stylishcarpet Weekly Spotify Playlist (2024-02-02)</h1>
   Start Spotify on the player you want to hear the playlist from. I.E. open the app and play something
   on your phone and then click the play button.
   <br>
@@ -35,7 +35,7 @@
       // Below would be if you wanted to play a bunch of songs together context_uri is for playlist
       //uris: ['spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=0c6a5ae6e7fc4123'],
       spotifyApi.play({
-	context_uri: 'spotify:playlist:6dwhWyAsgNE4zQunutRBVR?si=0d11882aeb274eeb'
+	context_uri: 'spotify:playlist:5iDreGK04v2CH01rxftYtz?si=1a455ac983ea4a1c'
       });
       // Below was trying to fix no active device found, fix means nothing is playing spotify now
       // spotifyApi.getMyDevices( function ( err, data ) {
@@ -128,6 +128,26 @@
 
   <!-- Previous Playlists -->
   <h2>Previous Playlists</h2>
+  <button id="play20240126">Play-2024-01-26</button>
+  <script>
+    document.getElementById('play20240126').addEventListener('click', async () => {
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:1RZn3yYnUqajLvzCfsOT3Z?si=b9b021537f064c36'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
+  <button id="play20240119">Play-2024-01-19</button>
+  <script>
+    document.getElementById('play20240119').addEventListener('click', async () => {
+      spotifyApi.play({
+	context_uri: 'spotify:playlist:6dwhWyAsgNE4zQunutRBVR?si=0d11882aeb274eeb'
+      });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      displayCurrentTrackInfo()
+    });
+  </script>
   <button id="play20240112">Play-2024-01-12</button>
   <script>
     document.getElementById('play20240112').addEventListener('click', async () => {
@@ -225,7 +245,7 @@
   <script>
     document.getElementById('newNoise').addEventListener('click', async () => {
       spotifyApi.play({
-	context_uri: 'spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=d7388b75c797429e'
+	context_uri: 'spotify:playlist:37i9dQZF1DWT2jS7NwYPVI?si=3336c43e8169444e'
       });
       await new Promise(resolve => setTimeout(resolve, 1000));
       displayCurrentTrackInfo()
@@ -233,7 +253,7 @@
   </script>
   <button id="freshFinds">Play Fresh Finds (Updates Wednesdays)</button>
   <script>
-    document.getElementById('newNoise').addEventListener('click', async () => {
+    document.getElementById('freshFinds').addEventListener('click', async () => {
       spotifyApi.play({
 	context_uri: 'spotify:playlist:37i9dQZF1DWWjGdmeTyeJ6?si=030665182e594f36'
       });

@@ -16,3 +16,11 @@ SSL Certs
 * `sudo ln -s /snap/bin/certbot /usr/bin/certbot`
 * `sudo certbot certonly --standalone`
 *  copy keys to fullchain.pem and privkey.pem to root of repo
+
+SSL Cert Renewal
+---
+The certs will expire and be auto renewed but not placed in the correct location, copy them over
+* cp /etc/letsencrypt/live/stylishcar.pet/fullchain.pem album_discovery
+* cp /etc/letsencrypt/live/stylishcar.pet/privkey.pem album_discovery
+* sudo chown user:group album_discovery/fullchain.pem
+* sudo chown user:group album_discovery/privkey.pem
